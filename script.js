@@ -13,21 +13,30 @@ function gridCreator(num, gm){
             gridbox.classList.add("box");
             gridbox.style ="width: 1rem; height: 1rem; background-color: gold; border-radius:1px; display: flex; gap: 1px;opacity:0%;";
         
-            gridbox.addEventListener("mouseenter", (e)=>{
-                let val = getComputedStyle(e.target);
-                let op = val.getPropertyValue("opacity");
-                let nop = (20+(op*100))/100;
-                e.target.style.setProperty("opacity",nop);
-                e.target.style.setProperty("background-color",cr);
-                console.log(op);
-                console.log(nop);
-            } )
+            gridbox.addEventListener("mouseenter", hover)
            
             gridrow.appendChild(gridbox);
         }
         gm.appendChild(gridrow);
     }
 
+}
+
+const hover = (e) => {
+    let val = getComputedStyle(e.target);
+    let op = val.getPropertyValue("opacity");
+    let nop = (20+(op*100))/100;
+    e.target.style.setProperty("opacity",nop);
+    e.target.style.setProperty("background-color",cr);
+
+}
+
+function gridNull(){
+    const box = document.querySelectorAll(".box");
+    box.forEach((b)=>{
+        console.log("remove")
+        b.removeEventListener("mouseenter",hover)
+    })
 }
 
 function valid(r,g,b){
@@ -46,13 +55,19 @@ function toggleV(m){
     
     m.forEach((n)=>{
         if(n.style.display === "none" ){
-            
+            donebtn.style.visibility = "visible"
             n.style.visibility = "visible"
             n.style.display = "flex"
             n.style.opacity = "50%"
             n.style.transition = " opacity 5s";
             donebtn.style.opacity = "1";
             n.style.opacity = "100%"
+        }else {
+           
+            n.style.visibility = "hidden"
+
+            gm.style.visibility = "visible";
+            donebtn.style.visibility = "hidden"
         }
 });
 }
@@ -125,7 +140,11 @@ done.style = "display: flex; justify-content: center; align-item: center; margin
 donebtn.style = "opacity: 0;"
 
 donebtn.addEventListener("click", (e)=>{
-    title.style.height = "400px";
+    title.style.height ="200px"
+
+   
+    title.style.transition = "height 2s"
    
     toggleV(m)
+    gridNull()
 })
