@@ -28,7 +28,13 @@ const hover = (e) => {
     let op = val.getPropertyValue("opacity");
     let nop = (20+(op*100))/100;
     e.target.style.setProperty("opacity",nop);
+   if(random.checked===true){
+    randomColorSelector()
+   }
+    
     e.target.style.setProperty("background-color",cr);
+
+    
 
 }
 
@@ -84,13 +90,14 @@ const gm = document.querySelector(".gridMother");
 const chbtn = document.querySelectorAll("#color")
 const done = document.querySelector("#done")
 const donebtn = document.querySelector("#donebtn")
-
+const gridSize = document.querySelector("#grid")
+const random = document.querySelector(".random")
 let cr = "rgb(0 0 0)"
 
 body.style = "font-family: Monospace; margin: 0; padding: 0px;  background-color: rgb(34 24 28); color: white; display: flex; flex-flow: column; justify-content: space-between; align-items: stretch;";
 title.style ="background-color: rgb(49 47 47); margin: 0; text-align: center; padding: 40px; height: 400px;font-size: 36px;"
 title.style.transition = "height 2s";
-btn.style = "width:40px;"
+btn.style = "width:40px; "
 btn.addEventListener("click", (e)=>{
     let clr = document.querySelectorAll(".box");
     clr.forEach( (box)=>{
@@ -102,9 +109,9 @@ btn.addEventListener("click", (e)=>{
     alert("hover check");
 }) */
 
-
-gm.style = "background-color:  rgb(34 24 28);color: white; display: flex; flex-flow: column; justify-content: center; align-items: center; margin: 1%; "
-gridCreator(32,gm);
+let gs = 32;
+gm.style = "background-color:  rgb(34 24 28);color: white; display: flex; flex-flow: column; justify-content: center; align-items: center; margin: 1%; max-height: 1400px;"
+gridCreator(gs,gm);
 
 
 color.addEventListener("change", (e)=>{
@@ -125,7 +132,7 @@ m.forEach((n)=>{
     n.style.opacity = "0";
     
 })
-start.style = "transition: all 300ms;";
+start.style = "width: 70px; height:40px; font-size: 20px; transition: all 300ms;";
 start.addEventListener("click", (e)=>{
     e.target.style.opacity = "0";
     title.style.height = "0";
@@ -134,7 +141,7 @@ start.addEventListener("click", (e)=>{
 
 done.style = "display: flex; justify-content: center; align-item: center; margin: 20px;"
 
-donebtn.style = "opacity: 0;"
+donebtn.style = "width: 70px; height:40px; font-size: 20px; opacity: 0;"
 
 donebtn.addEventListener("click", (e)=>{
     title.style.height ="200px"
@@ -146,3 +153,35 @@ donebtn.addEventListener("click", (e)=>{
     gridNull()
     
 })
+
+gridSize.addEventListener("change", (e)=>{
+    if(e.target.value < 5 || e.target.value > 82){
+        alert("Not a valid grid size")
+        gs=16;
+        e.target.value = 16
+    } else{
+        gs = e.target.value;
+        clearGrid(gm)
+        gridCreator(gs,gm)
+    }
+})
+
+function clearGrid(gm){
+    while(gm.firstChild){
+        gm.removeChild(gm.firstChild)
+    }
+}
+
+function randomColorSelector(){
+    let num1 = Math.floor((Math.random()*100)%255);
+    let num2 = Math.floor((Math.random()*100)%255)
+    let num3 = Math.floor((Math.random()*100)%255)
+
+    cr = "rgb("+num1+" "+ num2+" "+ num3+")"
+  
+}
+
+if(random.checked ===true){
+    randomColorSelector()
+    
+}
