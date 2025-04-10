@@ -1,3 +1,4 @@
+
 function gridCreator(num, gm){
     for(let i=0; i<num;i++){
         
@@ -72,12 +73,15 @@ function toggleV(m){
 });
 }
 
+function changeColor(e){
+    cr = e.target.value;
+}
 const body = document.querySelector("body");
 const m = document.querySelectorAll(".main")
 const title = document.querySelector(".title");
 const btn = document.querySelector("#startBtn");
 const gm = document.querySelector(".gridMother");
-const chbtn = document.querySelector(".change");
+const chbtn = document.querySelectorAll("#color")
 const done = document.querySelector("#done")
 const donebtn = document.querySelector("#donebtn")
 
@@ -102,20 +106,13 @@ btn.addEventListener("click", (e)=>{
 gm.style = "background-color:  rgb(34 24 28);color: white; display: flex; flex-flow: column; justify-content: center; align-items: center; margin: 1%; "
 gridCreator(32,gm);
 
-chbtn.addEventListener("click", ()=>{
-    let r = document.querySelector("#red").value;
-    let g = document.querySelector("#green").value;
-    let b = document.querySelector("#blue").value;
-    r = Math.floor(Number(r));
-    g = Math.floor(Number(g));
-    b = Math.floor(Number(b));
-    if(valid(r,g,b) === true){
-        cr = "rgb(" + r + " " + g + " " + b + ")";
-        alert("Color changed to rgb(" + r + " " + g + " " + b + ")")
-    }else{
-        alert("Not valid color")
-    }
+
+color.addEventListener("change", (e)=>{
+    changeColor(e);
+    console.log("color")
 })
+
+
 
 const selection = document.querySelector(".rgb");
 
@@ -143,8 +140,9 @@ donebtn.addEventListener("click", (e)=>{
     title.style.height ="200px"
 
    
-    title.style.transition = "height 2s"
+    title.style.transition = "height 1s"
    
     toggleV(m)
     gridNull()
+    
 })
